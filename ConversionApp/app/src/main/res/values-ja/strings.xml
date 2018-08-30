@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ConversionApp</string>
+    <string name="inches">インチ</string>
+    <string name="feet">フィート</string>
+    <string name="miles">マイル</string>
+    <string name="metres">メートル</string>
+</resources>
