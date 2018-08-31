@@ -6,32 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/buttonDist"
+    <ImageView
+        android:id="@+id/foodImage"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="14dp"
-        android:onClick="distClickHandler"
-        android:text="Distance"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toTopOf="@+id/foodDesc"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonTemp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/mayo1" />
 
-    <Button
-        android:id="@+id/buttonTemp"
+    <TextView
+        android:id="@+id/foodDesc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="28dp"
-        android:onClick="tempClickHandler"
-        android:text="Temperature"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.vdkja.conversionapp">
+    package="com.example.vdkja.imagebrowser">
 
     <application
         android:allowBackup="true"
@@ -16,8 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TemperatureActivity"></activity>
-        <activity android:name=".DistanceActivity"></activity>
+        <activity android:name=".FoodActivity"></activity>
     </application>
 
 </manifest>
