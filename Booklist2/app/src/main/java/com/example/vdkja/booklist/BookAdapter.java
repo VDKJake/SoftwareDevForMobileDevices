@@ -26,7 +26,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.AViewHolder> {
             super(view);
             title = (TextView) view.findViewById(R.id.title);
             rating = (TextView) view.findViewById(R.id.rating);
-            icon = (ImageView) view.findViewById(R.id.icon);
+            icon = (ImageView) view.findViewById(R.id.bookIcon);
         }
     }
 

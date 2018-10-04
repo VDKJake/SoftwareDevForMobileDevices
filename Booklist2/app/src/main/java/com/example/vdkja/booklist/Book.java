@@ -10,10 +10,10 @@ public class Book {
 
     }
 
-    public Book(String title, String rating)
+    public Book(String title, String rating, int icon)
     {
         bookTitle = title;
         bookRating = rating;
-        bookIcon = R.drawable.ic_launcher_foreground;
+        bookIcon = icon;
     }
 }
