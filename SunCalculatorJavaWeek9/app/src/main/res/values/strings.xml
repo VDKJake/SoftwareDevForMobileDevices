@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SunCalculatorJava</string>
+    <string name="preference_file_key">au.edu.swin.sdmd.suncalculatorjava.preferences</string>
+    <string name="custom_location">custom_location</string>
+</resources>
