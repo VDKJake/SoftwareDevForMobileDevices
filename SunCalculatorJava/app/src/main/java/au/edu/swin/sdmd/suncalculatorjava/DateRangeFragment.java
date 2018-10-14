@@ -48,16 +48,12 @@ public class DateRangeFragment extends Fragment {
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);
         dp.init(year,month,day,dateChangeHandler);
-        dp2.init(year,month,day,date2ChangeHandler);// setup initial values and reg. handler
+        dp2.init(year,month,day,date2ChangeHandler);
 
-        //sunSetView = view.findViewById(R.id.sunsetTimeTV);
-        //sunRiseView = view.findViewById(R.id.sunriseTimeTV);
         location = "Melbourne";
         lat = -37.50;
         lon = 145.01;
         tz = TimeZone.getDefault();
-        //dp.init(year,month,day,dateChangeHandler);
-        //updateTime(year, month, day);
     }
 
     private void updateTime(int year, int monthOfYear, int dayOfMonth, int year2, int monthOfYear2, int dayOfMonth2) {
@@ -116,7 +112,7 @@ public class DateRangeFragment extends Fragment {
         this.lon = lon;
         this.tz = TimeZone.getTimeZone(tz);
         Log.i("TIME_ZONE", "Time Zone: " + this.tz.getDisplayName());
-        //updateTime(dp.getYear(), dp.getMonth(), dp.getDayOfMonth());
+        updateTime(dp.getYear(), dp.getMonth(), dp.getDayOfMonth(), dp2.getYear(), dp2.getMonth(), dp2.getDayOfMonth());
         Log.i("DP_TIME", "Year: " + dp.getYear() + " Month: " + dp.getMonth() + " Day: " + dp.getDayOfMonth());
     }
 

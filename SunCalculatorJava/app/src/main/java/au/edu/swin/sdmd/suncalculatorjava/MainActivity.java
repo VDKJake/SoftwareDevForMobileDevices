@@ -34,10 +34,9 @@ import java.util.TimeZone;
 import au.edu.swin.sdmd.suncalculatorjava.calc.AstronomicalCalendar;
 import au.edu.swin.sdmd.suncalculatorjava.calc.GeoLocation;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements DateLocationFragment.OnFragmentInteractionListener{
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
-    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
     private ViewPager vPager;
     private FragmentPagerAdapter pAdapter;
     private String[] locationArray;
@@ -45,10 +44,15 @@ public class MainActivity extends AppCompatActivity{
     private Double[] lonArray = {144.50, 151.00, 149.00, 153.00, 147.00, 130.50, 138.50, 115.50};
     private String[] tzArray = {"Australia/Melbourne", "Australia/Sydney", "Australia/ACT", "Australia/Brisbane", "Australia/Hobart", "Australia/Darwin", "Australia/Adelaide", "Australia/Perth"};
     private android.support.v7.widget.ShareActionProvider shareActionProvider;
+    private Intent shareIntent;
+
+    public void onFragmentInteraction(String s)
+    {
+        updateIntent();
+    }
 
     public class FragmentPagerAdapter extends FragmentStatePagerAdapter{
         private final List<Fragment> mFragList = new ArrayList<>();
-        private final List<Fragment> mFragTitleList = new ArrayList<>();
 
         public FragmentPagerAdapter(FragmentManager fM)
         {
@@ -86,27 +90,22 @@ public class MainActivity extends AppCompatActivity{
 
         MenuItem item = menu.findItem(R.id.menuShare);
         shareActionProvider = (android.support.v7.widget.ShareActionProvider) MenuItemCompat.getActionProvider(item);
+
+        shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareActionProvider.setShareIntent(shareIntent);
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
+    private void updateIntent()
     {
-        switch(item.getItemId())
-        {
-            case R.id.menuShare:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void setShareIntent(Intent shareIntent)
-    {
-        if(shareActionProvider != null)
-        {
-            shareActionProvider.setShareIntent(shareIntent);
-        }
+        shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        Spinner locSpinner = findViewById(R.id.locSpinner);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, ((DateLocationFragment)pAdapter.getItem(0)).ShareString() + " for " + locSpinner.getSelectedItem().toString());
+        shareActionProvider.setShareIntent(shareIntent);
     }
 
     private void initializeUI() {
@@ -120,22 +119,25 @@ public class MainActivity extends AppCompatActivity{
         locationArray = getResources().getStringArray(R.array.location_array);
 
         Spinner spinnerLocation = (Spinner)findViewById(R.id.locSpinner);
-
+        Log.i("SETUP", "Done");
         spinnerLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
             {
                 int index = adapterView.getSelectedItemPosition();
                 Log.i("NEW_LOCATION", "new location, vPager current item: " + index);
-                if(vPager.getCurrentItem() == 0)
+                /*if(vPager.getCurrentItem() == 0)
                 {
                     ((DateLocationFragment)pAdapter.getItem(vPager.getCurrentItem())).UpdateLocation(locationArray[index], latArray[index], lonArray[index], tzArray[index]);
                 } else if(vPager.getCurrentItem() == 1)
                 {
                     ((DateRangeFragment)pAdapter.getItem(vPager.getCurrentItem())).UpdateLocation(locationArray[index], latArray[index], lonArray[index], tzArray[index]);
-                }
-            }
+                }*/
+                ((DateLocationFragment)pAdapter.getItem(0)).UpdateLocation(locationArray[index], latArray[index], lonArray[index], tzArray[index]);
+                ((DateRangeFragment)pAdapter.getItem(1)).UpdateLocation(locationArray[index], latArray[index], lonArray[index], tzArray[index]);
+                updateIntent();
 
+            }
             public void onNothingSelected(AdapterView<?> adapterView)
             {
                 return;

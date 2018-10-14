@@ -1,5 +1,6 @@
 package au.edu.swin.sdmd.suncalculatorjava;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -26,11 +27,33 @@ public class DateLocationFragment extends Fragment {
     private double lat;
     private double lon;
     private TimeZone tz;
+    private OnFragmentInteractionListener mListener;
+    private boolean ready = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_date_loc, container, false);
         InitializeUI(view);
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context)
+    {
+        super.onAttach(context);
+        if(context instanceof OnFragmentInteractionListener)
+        {
+            mListener = (OnFragmentInteractionListener)context;
+        }
+        else
+        {
+            throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    public interface OnFragmentInteractionListener
+    {
+        void onFragmentInteraction(String s);
     }
 
     public void InitializeUI(View view)
@@ -50,6 +73,7 @@ public class DateLocationFragment extends Fragment {
         tz = TimeZone.getDefault();
         dp.init(year,month,day,dateChangeHandler);
         updateTime(year, month, day);
+        ready = true;
     }
 
     private void updateTime(int year, int monthOfYear, int dayOfMonth) {
@@ -64,6 +88,10 @@ public class DateLocationFragment extends Fragment {
 
         sunRiseView.setText(sdf.format(srise));
         sunSetView.setText(sdf.format(sset));
+        if(ready == true)
+        {
+            mListener.onFragmentInteraction("uhh");
+        }
     }
 
     public void UpdateLocation(String location, double lat, double lon, String tz)
@@ -75,6 +103,12 @@ public class DateLocationFragment extends Fragment {
         Log.i("TIME_ZONE", "Time Zone: " + this.tz.getDisplayName());
         updateTime(dp.getYear(), dp.getMonth(), dp.getDayOfMonth());
         Log.i("DP_TIME", "Year: " + dp.getYear() + " Month: " + dp.getMonth() + " Day: " + dp.getDayOfMonth());
+    }
+
+    public String ShareString()
+    {
+        Log.i("SUNRISE/SETVIEW" , sunRiseView.getText() + " " + sunSetView.getText());
+        return "Sunrise: " + sunRiseView.getText() + " Sunset: " + sunSetView.getText() + ", " + dp.getDayOfMonth() + "/" + dp.getMonth() + 1 + "/" + dp.getYear();
     }
 
     DatePicker.OnDateChangedListener dateChangeHandler = new DatePicker.OnDateChangedListener()
